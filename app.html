@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>语音任务四象限</title>
+<style>body{font-family:system-ui,Arial;margin:0;background:#f3f7ff;color:#0f172a}.top{padding:12px;background:#2563eb;color:#fff;display:flex;gap:8px;align-items:center}.top button{border:0;border-radius:8px;padding:8px 10px}.wrap{padding:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.q{background:#fff;border-radius:12px;padding:8px;min-height:180px}.card{background:#eef5ff;border-radius:8px;padding:6px;margin:6px 0;cursor:pointer}.muted{color:#64748b;font-size:12px}.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center}.panel{background:#fff;border-radius:12px;padding:12px;width:min(92vw,560px);max-height:88vh;overflow:auto}input,textarea,select{width:100%;margin:6px 0;padding:8px}.row{display:flex;gap:8px}.sub{padding:6px;background:#f8fafc;border-radius:8px;margin:6px 0}</style></head>
+<body><div class='top'><strong>语音任务四象限</strong><button onclick='openCreate()'>+新建</button><button onclick='startVoice()'>🎤语音</button><span id='voice' class='muted'></span></div>
+<div class='wrap'><div id='stats' class='muted'></div><div class='grid' id='board'></div></div>
+<div class='modal' id='m'><div class='panel' id='p'></div></div>
+<script>
+const Q=['Q1 重要且紧急','Q2 重要不紧急','Q3 不重要但紧急','Q4 不重要不紧急','未分类'];
+let tasks=JSON.parse(localStorage.getItem('tasks')||'[]');
+const S=['Todo','进行中','完成','异常','取消'];
+function save(){localStorage.setItem('tasks',JSON.stringify(tasks));render();}
+function prog(t){if(!t.subs||!t.subs.length)return t.status==='完成'?100:t.status==='进行中'?50:0;const done=t.subs.filter(s=>s.status==='完成').length;return Math.round(done*100/t.subs.length)}
+function render(){const b=document.getElementById('board');b.innerHTML='';const g=[0,1,2,3,4].map(i=>tasks.filter(t=>t.q===i));[0,1,2,3,4].forEach(i=>{const d=document.createElement('div');d.className='q';d.innerHTML=`<b>${Q[i]}（${g[i].length}）</b>`+g[i].map(t=>`<div class='card' onclick='openTask("${t.id}")'><div>${t.title}</div><div class='muted'>${t.status} · ${prog(t)}% · 截止 ${t.due||'无'}</div></div>`).join('');b.appendChild(d)});document.getElementById('stats').textContent=`共 ${tasks.length} 项`;}
+function modal(html){m.style.display='flex';p.innerHTML=html}function closeM(){m.style.display='none'}
+function openCreate(text=''){modal(`<h3>新建任务</h3><input id=t placeholder='标题' value='${(text||'').slice(0,20)}'><textarea id=c placeholder='描述'>${text||''}</textarea><div class='row'><select id=q>${Q.map((x,i)=>`<option value='${i}' ${i===4?'selected':''}>${x}</option>`)}</select><select id=s>${S.map(x=>`<option>${x}</option>`)}</select></div><input id=d placeholder='截止时间 2026-05-29 18:00'><button onclick='create()'>保存</button> <button onclick='closeM()'>取消</button>`)}
+function create(){const t={id:Date.now()+'' ,title:document.getElementById('t').value.trim(),content:c.value,q:+q.value,status:s.value,due:d.value,subs:[]};if(!t.title)return alert('标题必填');tasks.unshift(t);save();closeM();}
+function openTask(id){const t=tasks.find(x=>x.id===id);modal(`<h3>${t.title}</h3><div class='muted'>进度 ${prog(t)}%</div><textarea id=ec>${t.content||''}</textarea><div class='row'><select id=eq>${Q.map((x,i)=>`<option value='${i}' ${i===t.q?'selected':''}>${x}</option>`)}</select><select id=es>${S.map(x=>`<option ${x===t.status?'selected':''}>${x}</option>`)}</select></div><input id=ed value='${t.due||''}' placeholder='截止'><h4>子任务</h4>${t.subs.map((s,i)=>`<div class='sub'>${s.title} - <select onchange='setSub("${id}",${i},this.value)'>${S.map(st=>`<option ${st===s.status?'selected':''}>${st}</option>`)}</select></div>`).join('')}<div class='row'><input id=st placeholder='新增子任务'><button onclick='addSub("${id}")'>添加</button></div><button onclick='updateTask("${id}")'>保存</button> <button onclick='delTask("${id}")'>删除</button> <button onclick='closeM()'>关闭</button>`)}
+function addSub(id){const t=tasks.find(x=>x.id===id);const v=document.getElementById('st').value.trim();if(!v)return;t.subs.push({title:v,status:'Todo'});save();openTask(id)}
+function setSub(id,i,v){tasks.find(x=>x.id===id).subs[i].status=v;save();}
+function updateTask(id){const t=tasks.find(x=>x.id===id);t.content=ec.value;t.q=+eq.value;t.status=es.value;t.due=ed.value;save();closeM();}
+function delTask(id){tasks=tasks.filter(x=>x.id!==id);save();closeM();}
+function startVoice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){openCreate('');return alert('当前浏览器不支持语音识别，已可用文字新建');}
+const r=new SR();r.lang='zh-CN';r.interimResults=false;r.onstart=()=>voice.textContent='录音中...';r.onresult=e=>{voice.textContent='';openCreate(e.results[0][0].transcript)};r.onerror=()=>{voice.textContent='';openCreate('');alert('转写失败，已切换文字输入')};r.start();}
+m.onclick=e=>{if(e.target.id==='m')closeM()};render();
+</script></body></html>
