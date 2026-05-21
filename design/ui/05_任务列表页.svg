@@ -1,0 +1,19 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'>
+<rect width='1080' height='1920' fill='#F5F8FF'/>
+<text x='56' y='92' font-size='42' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A' font-weight='700'>任务列表</text>
+<rect x='56' y='140' width='968' height='102' rx='22' fill='white'/>
+<text x='88' y='202' font-size='26' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>筛选：全部｜状态：进行中｜排序：更新时间</text>
+
+<g font-family='PingFang SC, Microsoft YaHei, Arial'>
+<a href='04_任务详情页.svg'><rect x='56' y='280' width='968' height='188' rx='24' fill='white'/></a>
+<text x='94' y='352' font-size='32' fill='#0F172A'>季度预算复核</text><text x='94' y='402' font-size='24' fill='#64748B'>进行中｜66%｜截止 05-29</text><rect x='842' y='320' width='140' height='56' rx='14' fill='#DBEAFE'/><text x='888' y='356' font-size='24' fill='#1D4ED8'>Q2</text>
+<rect x='56' y='492' width='968' height='188' rx='24' fill='white'/><text x='94' y='564' font-size='32' fill='#0F172A'>会议纪要整理</text><text x='94' y='614' font-size='24' fill='#64748B'>异常｜30%｜截止 05-28</text><rect x='842' y='532' width='140' height='56' rx='14' fill='#DBEAFE'/><text x='888' y='568' font-size='24' fill='#1D4ED8'>Q1</text>
+<rect x='56' y='704' width='968' height='188' rx='24' fill='white'/><text x='94' y='776' font-size='32' fill='#0F172A'>差旅报销提交</text><text x='94' y='826' font-size='24' fill='#64748B'>完成｜100%｜截止 05-21</text><rect x='842' y='744' width='140' height='56' rx='14' fill='#DBEAFE'/><text x='888' y='780' font-size='24' fill='#1D4ED8'>Q3</text>
+</g>
+
+<rect x='0' y='1810' width='1080' height='110' fill='white'/>
+<a href='01_看板页.svg'><text x='126' y='1878' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#64748B'>看板</text></a>
+<text x='376' y='1878' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#2563EB' font-weight='700'>列表</text>
+<a href='02_语音新建页.svg'><text x='626' y='1878' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#64748B'>新建</text></a>
+<text x='876' y='1878' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#64748B'>我的</text>
+</svg>
