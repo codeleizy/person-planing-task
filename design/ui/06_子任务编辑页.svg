@@ -1,0 +1,13 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'>
+<rect width='1080' height='1920' fill='#F5F8FF'/>
+<text x='56' y='92' font-size='42' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A' font-weight='700'>子任务编辑</text>
+<rect x='56' y='160' width='968' height='980' rx='30' fill='white'/>
+<text x='96' y='250' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#64748B'>子任务标题</text>
+<rect x='96' y='282' width='888' height='98' rx='18' fill='#F8FAFC'/><text x='126' y='344' font-size='30' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>收集历史预算与成本数据</text>
+<text x='96' y='450' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#64748B'>状态</text>
+<rect x='96' y='482' width='270' height='90' rx='16' fill='#DBEAFE'/><text x='186' y='538' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#1D4ED8'>完成</text>
+<rect x='384' y='482' width='270' height='90' rx='16' fill='#EFF6FF'/><text x='450' y='538' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#334155'>进行中</text>
+<rect x='672' y='482' width='312' height='90' rx='16' fill='#EFF6FF'/><text x='768' y='538' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#334155'>异常</text>
+<a href='04_任务详情页.svg'><rect x='96' y='980' width='888' height='110' rx='22' fill='#2563EB'/></a>
+<text x='468' y='1048' font-size='34' font-family='PingFang SC, Microsoft YaHei, Arial' fill='white' font-weight='700'>保存</text>
+</svg>
