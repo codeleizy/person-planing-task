@@ -1,0 +1,20 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'>
+<rect width='1080' height='1920' fill='#F5F8FF'/>
+<text x='56' y='92' font-size='42' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A' font-weight='700'>语音新建任务</text>
+<text x='56' y='142' font-size='24' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#64748B'>语音优先，文字兜底</text>
+
+<rect x='56' y='184' width='968' height='560' rx='32' fill='white'/>
+<text x='96' y='260' font-size='34' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>点击开始录音（最长 60 秒）</text>
+<a href='03_转写确认页.svg'><circle cx='540' cy='500' r='168' fill='#3B82F6'/></a>
+<text x='462' y='514' font-size='36' font-family='PingFang SC, Microsoft YaHei, Arial' fill='white' font-weight='700'>开始录音</text>
+<text x='472' y='582' font-size='24' font-family='PingFang SC, Microsoft YaHei, Arial' fill='white'>00:00 / 01:00</text>
+
+<rect x='56' y='776' width='968' height='180' rx='28' fill='white'/>
+<text x='96' y='856' font-size='30' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>转写失败？可一键切换文字输入</text>
+<rect x='730' y='812' width='250' height='104' rx='22' fill='#DBEAFE'/>
+<text x='786' y='874' font-size='30' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#2563EB' font-weight='700'>文字输入</text>
+
+<rect x='56' y='990' width='968' height='690' rx='28' fill='white'/>
+<text x='96' y='1060' font-size='32' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>录音波形预览</text>
+<polyline points='120,1450 150,1310 180,1500 210,1260 240,1460 270,1330 300,1500 330,1210 360,1500 390,1280 420,1460 450,1320 480,1500 510,1260 540,1500 570,1230 600,1500 630,1290 660,1460 690,1280 720,1500 750,1260 780,1460 810,1300 840,1500 870,1270 900,1460 930,1310 960,1500' fill='none' stroke='#3B82F6' stroke-width='9' stroke-linecap='round'/>
+</svg>

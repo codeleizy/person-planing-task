@@ -1,0 +1,17 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'>
+<rect width='1080' height='1920' fill='#F5F8FF'/>
+<text x='56' y='92' font-size='42' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A' font-weight='700'>转写确认</text>
+<rect x='56' y='150' width='968' height='1480' rx='30' fill='white'/>
+<text x='96' y='240' font-size='26' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#64748B'>标题（自动生成，可编辑）</text>
+<rect x='96' y='268' width='888' height='92' rx='18' fill='#F8FAFC'/><text x='122' y='325' font-size='30' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>提交季度预算初稿并发起评审</text>
+<text x='96' y='420' font-size='26' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#64748B'>转写内容</text>
+<rect x='96' y='448' width='888' height='520' rx='18' fill='#F8FAFC'/>
+<text x='122' y='510' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#334155'><tspan x='122' dy='0'>今天下午完成预算表第一版，</tspan><tspan x='122' dy='44'>并整理说明文档，明天上午前发给财务复核。</tspan></text>
+<text x='96' y='1038' font-size='26' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#64748B'>象限分类</text>
+<rect x='96' y='1068' width='430' height='90' rx='16' fill='#DBEAFE'/><text x='124' y='1125' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#1D4ED8'>未分类（默认）</text>
+<rect x='554' y='1068' width='430' height='90' rx='16' fill='#EFF6FF'/><text x='650' y='1125' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#334155'>Todo</text>
+<text x='96' y='1228' font-size='26' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#64748B'>截止时间（可选）</text>
+<rect x='96' y='1258' width='888' height='92' rx='18' fill='#F8FAFC'/><text x='122' y='1315' font-size='30' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>2026-05-29 18:00</text>
+<a href='04_任务详情页.svg'><rect x='96' y='1460' width='888' height='110' rx='22' fill='#2563EB'/></a>
+<text x='448' y='1528' font-size='34' font-family='PingFang SC, Microsoft YaHei, Arial' fill='white' font-weight='700'>保存任务</text>
+</svg>

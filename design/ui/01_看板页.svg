@@ -1,0 +1,34 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'>
+<defs>
+  <linearGradient id='bg' x1='0' y1='0' x2='0' y2='1'>
+    <stop offset='0%' stop-color='#F8FAFF'/><stop offset='100%' stop-color='#EEF4FF'/>
+  </linearGradient>
+</defs>
+<rect width='1080' height='1920' fill='url(#bg)'/>
+<text x='56' y='92' font-size='44' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A' font-weight='700'>语音任务看板</text>
+<text x='56' y='142' font-size='24' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#64748B'>今天 2026-05-21 · 周四</text>
+<rect x='56' y='176' width='968' height='88' rx='24' fill='white'/>
+<text x='84' y='230' font-size='30' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>未分类收集箱（6）</text>
+
+<g font-family='PingFang SC, Microsoft YaHei, Arial'>
+<rect x='56' y='290' width='468' height='650' rx='28' fill='white'/><text x='84' y='338' font-size='26' fill='#2563EB' font-weight='700'>Q1 重要且紧急（2）</text>
+<a href='04_任务详情页.svg'><rect x='78' y='360' width='424' height='158' rx='20' fill='#EFF6FF'/></a><text x='102' y='416' font-size='28' fill='#0F172A'>发布会物料确认</text><text x='102' y='454' font-size='22' fill='#475569'>进行中 · 40% · 截止 05-25</text>
+<rect x='78' y='536' width='424' height='158' rx='20' fill='#EFF6FF'/><text x='102' y='592' font-size='28' fill='#0F172A'>供应商付款审批</text><text x='102' y='630' font-size='22' fill='#475569'>Todo · 0% · 截止 05-27</text>
+
+<rect x='556' y='290' width='468' height='650' rx='28' fill='white'/><text x='584' y='338' font-size='26' fill='#2563EB' font-weight='700'>Q2 重要不紧急（3）</text>
+<rect x='578' y='360' width='424' height='158' rx='20' fill='#EFF6FF'/><text x='602' y='416' font-size='28' fill='#0F172A'>季度预算初稿</text><text x='602' y='454' font-size='22' fill='#475569'>进行中 · 66% · 截止 05-29</text>
+<rect x='578' y='536' width='424' height='158' rx='20' fill='#EFF6FF'/><text x='602' y='592' font-size='28' fill='#0F172A'>产品复盘报告</text><text x='602' y='630' font-size='22' fill='#475569'>进行中 · 20% · 截止 06-01</text>
+
+<rect x='56' y='966' width='468' height='650' rx='28' fill='white'/><text x='84' y='1014' font-size='26' fill='#2563EB' font-weight='700'>Q3 不重要但紧急（1）</text>
+<rect x='78' y='1036' width='424' height='158' rx='20' fill='#EFF6FF'/><text x='102' y='1092' font-size='28' fill='#0F172A'>差旅报销提交</text><text x='102' y='1130' font-size='22' fill='#475569'>完成 · 100% · 截止 05-21</text>
+
+<rect x='556' y='966' width='468' height='650' rx='28' fill='white'/><text x='584' y='1014' font-size='26' fill='#2563EB' font-weight='700'>Q4 不重要不紧急（2）</text>
+<rect x='578' y='1036' width='424' height='158' rx='20' fill='#EFF6FF'/><text x='602' y='1092' font-size='28' fill='#0F172A'>阅读行业报告</text><text x='602' y='1130' font-size='22' fill='#475569'>Todo · 0% · 截止 06-05</text>
+</g>
+
+<rect x='0' y='1810' width='1080' height='110' fill='white'/>
+<text x='126' y='1878' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#2563EB' font-weight='700'>看板</text>
+<a href='05_任务列表页.svg'><text x='376' y='1878' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#64748B'>列表</text></a>
+<a href='02_语音新建页.svg'><text x='626' y='1878' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#64748B'>新建</text></a>
+<text x='876' y='1878' font-size='28' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#64748B'>我的</text>
+</svg>

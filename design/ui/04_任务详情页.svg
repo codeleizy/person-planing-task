@@ -1,0 +1,19 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'>
+<rect width='1080' height='1920' fill='#F5F8FF'/>
+<text x='56' y='92' font-size='42' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A' font-weight='700'>任务详情</text>
+<rect x='56' y='140' width='968' height='830' rx='30' fill='white'/>
+<text x='96' y='220' font-size='38' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>提交季度预算初稿</text>
+<text x='96' y='300' font-size='30' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>状态：进行中</text>
+<text x='96' y='360' font-size='30' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>进度：66%（自动计算）</text>
+<rect x='96' y='392' width='888' height='18' rx='9' fill='#E2E8F0'/><rect x='96' y='392' width='586' height='18' rx='9' fill='#3B82F6'/>
+<text x='96' y='470' font-size='30' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>象限：Q2 重要不紧急</text>
+<text x='96' y='530' font-size='30' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>截止：2026-05-29 18:00</text>
+<text x='96' y='610' font-size='26' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#64748B'>描述：今天下午完成预算表第一版，明早提交复核。</text>
+
+<rect x='56' y='1000' width='968' height='760' rx='30' fill='white'/>
+<text x='96' y='1070' font-size='36' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>子任务</text>
+<a href='06_子任务编辑页.svg'><rect x='96' y='1120' width='888' height='134' rx='20' fill='#EFF6FF'/></a><text x='126' y='1198' font-size='30' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>收集数据（完成）</text>
+<rect x='96' y='1280' width='888' height='134' rx='20' fill='#EFF6FF'/><text x='126' y='1358' font-size='30' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>写提纲（进行中）</text>
+<rect x='96' y='1440' width='888' height='134' rx='20' fill='#EFF6FF'/><text x='126' y='1518' font-size='30' font-family='PingFang SC, Microsoft YaHei, Arial' fill='#0F172A'>复核数字（Todo）</text>
+<rect x='694' y='1620' width='290' height='106' rx='22' fill='#2563EB'/><text x='758' y='1685' font-size='30' font-family='PingFang SC, Microsoft YaHei, Arial' fill='white'>新增子任务</text>
+</svg>
