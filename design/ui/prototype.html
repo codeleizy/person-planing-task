@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>语音任务四象限 - 一体化预览</title>
+  <style>
+    body{margin:0;background:#0b1220;color:#e5e7eb;font-family:"PingFang SC","Microsoft YaHei",Arial,sans-serif}
+    .top{position:sticky;top:0;background:#111827;padding:12px 16px;display:flex;gap:8px;flex-wrap:wrap;z-index:9}
+    button{border:0;padding:10px 14px;border-radius:10px;background:#2563eb;color:#fff;font-weight:700;cursor:pointer}
+    .hint{padding:10px 16px;color:#93c5fd;font-size:14px}
+    .stage{display:flex;justify-content:center;padding:10px 0 24px}
+    object{width:min(100vw,540px);height:960px;border:0;border-radius:18px;box-shadow:0 20px 40px rgba(0,0,0,.45);background:#fff}
+  </style>
+</head>
+<body>
+  <div class="top">
+    <button onclick="show('01_看板页.svg')">看板</button>
+    <button onclick="show('02_语音新建页.svg')">语音新建</button>
+    <button onclick="show('03_转写确认页.svg')">转写确认</button>
+    <button onclick="show('04_任务详情页.svg')">任务详情</button>
+    <button onclick="show('05_任务列表页.svg')">任务列表</button>
+    <button onclick="show('06_子任务编辑页.svg')">子任务编辑</button>
+  </div>
+  <div class="hint">如果你之前“无法预览”，请直接打开本文件：<b>prototype.html</b>。这是单页预览器，不依赖 SVG 内跳转。</div>
+  <div class="stage"><object id="viewer" data="01_看板页.svg" type="image/svg+xml"></object></div>
+  <script>
+    function show(file){ document.getElementById('viewer').setAttribute('data', file); }
+  </script>
+</body>
+</html>

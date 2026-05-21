@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>语音任务四象限</title>
+  <style>
+    :root{--bg:#f3f7ff;--card:#fff;--primary:#2563eb;--muted:#64748b;--ok:#16a34a;--bad:#dc2626}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:#0f172a}
+    .top{padding:12px;background:var(--primary);color:#fff;display:flex;gap:8px;align-items:center;position:sticky;top:0;z-index:2}
+    .top button{border:0;border-radius:8px;padding:8px 10px}
+    .wrap{padding:12px;padding-bottom:74px}.hidden{display:none}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.q,.panel{background:var(--card);border-radius:12px;padding:10px;box-shadow:0 2px 10px #0001}
+    .card{background:#eef5ff;border-radius:8px;padding:8px;margin:8px 0;cursor:pointer}.muted{color:var(--muted);font-size:12px}
+    .tabs{position:fixed;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-top:1px solid #dbe4f2}
+    .tabs button{padding:12px;border:0;background:transparent}.tabs .on{color:var(--primary);font-weight:700}
+    .modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:10px}
+    .sheet{background:#fff;border-radius:12px;padding:12px;width:min(680px,96vw);max-height:90vh;overflow:auto}
+    input,textarea,select{width:100%;margin:6px 0;padding:10px}.row{display:flex;gap:8px}.sub{padding:8px;background:#f8fafc;border-radius:8px;margin:6px 0}
+    .chip{padding:2px 8px;border-radius:999px;font-size:12px;color:#fff;display:inline-block}.todo{background:#64748b}.doing{background:#2563eb}.done{background:var(--ok)}.err{background:var(--bad)}.cancel{background:#475569}
+    progress{width:100%}
+  </style>
+</head>
+<body>
+<div class='top'><strong>语音任务四象限</strong><button onclick='openCreate()'>+新建</button><button onclick='startVoice()'>🎤语音</button><span id='voice' class='muted'></span></div>
+<div class='wrap'>
+  <section id='view-board'><div id='stats' class='muted'></div><div class='grid' id='board'></div></section>
+  <section id='view-list' class='hidden'>
+    <div class='panel'><div class='row'><select id='fStatus' onchange='renderList()'></select><select id='fSort' onchange='renderList()'><option value='new'>按创建时间</option><option value='due'>按截止时间</option><option value='progress'>按进度</option></select></div><input id='search' placeholder='搜索标题/描述' oninput='renderList()'></div>
+    <div id='list'></div>
+  </section>
+  <section id='view-reminders' class='hidden'><div class='panel'><h3>提醒中心（未来24小时）</h3><div id='reminderList' class='muted'></div></div></section>
+  <section id='view-new' class='hidden'><div class='panel'><h3>快速新建</h3><button onclick='openCreate()'>文字创建</button> <button onclick='startVoice()'>语音创建</button></div></section>
+  <section id='view-me' class='hidden'><div class='panel'><h3>我的</h3><p class='muted'>数据保存在本机浏览器 localStorage。</p><button onclick='exportData()'>导出 JSON</button> <button onclick='triggerImport()'>导入 JSON</button> <button onclick='requestNotify()'>开启通知</button> <button onclick='clearData()'>清空数据</button><input id='importFile' type='file' accept='application/json' class='hidden' onchange='importData(event)'></div></section>
+</div>
+<div class='tabs'><button id='t-board' class='on' onclick="switchView('board')">看板</button><button id='t-list' onclick="switchView('list')">列表</button><button id='t-reminders' onclick="switchView('reminders')">提醒</button><button id='t-new' onclick="switchView('new')">新建</button><button id='t-me' onclick="switchView('me')">我的</button></div>
+<div class='modal' id='m'><div class='sheet' id='p'></div></div>
+<script>
+const STORAGE_KEY='tasks_v2';
+const Q=['Q1 重要且紧急','Q2 重要不紧急','Q3 不重要但紧急','Q4 不重要不紧急','未分类'];
+const S=['全部','Todo','进行中','完成','异常','取消'];
+const flow={Todo:['进行中','取消','异常'],进行中:['完成','异常','取消'],异常:['进行中','取消'],完成:['进行中'],取消:['Todo']};
+let tasks=normalizeTasks(JSON.parse(localStorage.getItem(STORAGE_KEY)||localStorage.getItem('tasks')||'[]'));
+function normalizeTasks(arr){return (Array.isArray(arr)?arr:[]).map(t=>({id:t.id||uid(),title:t.title||'未命名任务',content:t.content||'',q:Number.isInteger(t.q)?t.q:4,status:S.includes(t.status)?t.status:'Todo',due:t.due||'',rem:!!t.rem,subs:Array.isArray(t.subs)?t.subs.map(s=>({title:s.title||'未命名子任务',status:S.includes(s.status)?s.status:'Todo'})):[],created:t.created||Date.now(),notified:!!t.notified,version:2}));}
+const uid=()=>Date.now()+Math.random().toString(16).slice(2);
+const statusClass=s=>({Todo:'todo','进行中':'doing','完成':'done','异常':'err','取消':'cancel'}[s]||'todo');
+const finalStatuses=new Set(['完成','取消']);
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(tasks));renderBoard();renderList();renderReminders();}
+function prog(t){if(!t.subs?.length)return t.status==='完成'?100:t.status==='进行中'?50:0;return Math.round(t.subs.filter(s=>s.status==='完成').length*100/t.subs.length)}
+function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",""":"&quot;","'":"&#39;"}[m]))}
+function renderBoard(){const b=board;b.innerHTML='';const g=[0,1,2,3,4].map(i=>tasks.filter(t=>t.q===i));for(let i=0;i<5;i++){const d=document.createElement('div');d.className='q';d.innerHTML=`<b>${Q[i]}（${g[i].length}）</b>`+g[i].map(t=>`<div class='card' onclick='openTask("${t.id}")'><div>${esc(t.title)} <span class='chip ${statusClass(t.status)}'>${t.status}</span></div><progress max='100' value='${prog(t)}'></progress><div class='muted'>${prog(t)}% · 截止 ${fmtDue(t.due)}</div></div>`).join('');b.appendChild(d)}stats.textContent=`共 ${tasks.length} 项`}
+function fmtDue(d){if(!d) return '无'; try{return new Date(d).toLocaleString('zh-CN',{hour12:false})}catch{return d}}
+function renderList(){fStatus.innerHTML=S.map(x=>`<option ${fStatus.value===x?'selected':''}>${x}</option>`).join('');const st=fStatus.value||'全部';const kw=(search.value||'').trim().toLowerCase();let arr=[...tasks];if(st!=='全部')arr=arr.filter(t=>t.status===st);if(kw)arr=arr.filter(t=>(t.title||'').toLowerCase().includes(kw)||(t.content||'').toLowerCase().includes(kw));if(fSort.value==='due')arr.sort((a,b)=>(a.due||'9999').localeCompare(b.due||'9999'));else if(fSort.value==='progress')arr.sort((a,b)=>prog(b)-prog(a)); else arr.sort((a,b)=>b.created-a.created);list.innerHTML=arr.map(t=>`<div class='panel card' onclick='openTask("${t.id}")'><div>${esc(t.title)} <span class='chip ${statusClass(t.status)}'>${t.status}</span></div><progress max='100' value='${prog(t)}'></progress><div class='muted'>${Q[t.q]} · ${prog(t)}% · 截止 ${fmtDue(t.due)}</div></div>`).join('')||"<div class='muted'>暂无任务</div>"}
+function renderReminders(){const now=Date.now();const end=now+24*3600*1000;const rows=tasks.filter(t=>t.rem&&t.due&&new Date(t.due).getTime()>now&&new Date(t.due).getTime()<=end).sort((a,b)=>new Date(a.due)-new Date(b.due));reminderList.innerHTML=rows.length?rows.map(t=>`<div class='card' onclick='openTask("${t.id}")'><div>${esc(t.title)}</div><div class='muted'>提醒时间：${fmtDue(new Date(new Date(t.due).getTime()-3600000).toISOString())}</div></div>`).join(''):"<div class='muted'>未来24小时无提醒任务</div>";}
+function switchView(v){['board','list','reminders','new','me'].forEach(x=>{document.getElementById('view-'+x).classList.toggle('hidden',x!==v);document.getElementById('t-'+x).classList.toggle('on',x===v)})}
+function modal(h){m.style.display='flex';p.innerHTML=h} function closeM(){m.style.display='none'}
+function openCreate(text=''){modal(`<h3>新建任务</h3><input id=t placeholder='标题' value='${esc((text||'').slice(0,20))}'><textarea id=c placeholder='描述'>${esc(text||'')}</textarea><div class='row'><select id=q>${Q.map((x,i)=>`<option value='${i}' ${i===4?'selected':''}>${x}</option>`)}</select><select id=s>${S.slice(1).map(x=>`<option>${x}</option>`)}</select></div><input id=d type='datetime-local'><label><input type='checkbox' id=rem> 到期前1小时提醒</label><button onclick='create()'>保存</button> <button onclick='closeM()'>取消</button>`)}
+function create(){const dueVal=d.value?new Date(d.value).toISOString():'';const t={id:uid(),title:document.getElementById('t').value.trim(),content:c.value,q:+q.value,status:s.value,due:dueVal,rem:rem.checked,subs:[],created:Date.now(),notified:false,version:2};if(!t.title)return alert('标题必填');tasks.unshift(t);save();scheduleReminder(t);closeM();}
+function openTask(i){const t=tasks.find(x=>x.id===i);if(!t)return;const dueLocal=t.due?new Date(t.due).toISOString().slice(0,16):'';modal(`<h3>${esc(t.title)}</h3><div class='muted'>进度 ${prog(t)}%</div><textarea id=ec>${esc(t.content||'')}</textarea><div class='row'><select id=eq>${Q.map((x,ix)=>`<option value='${ix}' ${ix===t.q?'selected':''}>${x}</option>`)}</select><select id=es onchange='checkStatusChange("${i}",this.value)'>${S.slice(1).map(x=>`<option ${x===t.status?'selected':''}>${x}</option>`)}</select></div><input id=ed type='datetime-local' value='${dueLocal}'><label><input type='checkbox' id=erem ${t.rem?'checked':''}> 到期前1小时提醒</label><h4>子任务</h4>${t.subs.map((s,ix)=>`<div class='sub'>${esc(s.title)} - <select onchange='setSub("${i}",${ix},this.value)'>${S.slice(1).map(st=>`<option ${st===s.status?'selected':''}>${st}</option>`)}</select> <button onclick='delSub("${i}",${ix})'>删</button></div>`).join('')}<div class='row'><input id=st placeholder='新增子任务'><button onclick='addSub("${i}")'>添加</button></div><button onclick='updateTask("${i}")'>保存</button> <button onclick='delTask("${i}")'>删除</button> <button onclick='closeM()'>关闭</button>`)}
+function checkStatusChange(id,next){const t=tasks.find(x=>x.id===id);if(!t) return; if(next!==t.status && !(flow[t.status]||[]).includes(next)){alert(`状态不可从 ${t.status} 直接变更到 ${next}`);es.value=t.status;return;}if(next==='完成'&&t.subs.length&&t.subs.some(s=>s.status!=='完成')){alert('仍有未完成子任务，不能标记完成');es.value=t.status;}}
+function addSub(i){const t=tasks.find(x=>x.id===i),v=st.value.trim();if(!v)return;t.subs.push({title:v,status:'Todo'});if(finalStatuses.has(t.status))t.status='进行中';save();openTask(i)}
+function delSub(i,ix){const t=tasks.find(x=>x.id===i);t.subs.splice(ix,1);save();openTask(i)}
+function setSub(i,ix,v){const t=tasks.find(x=>x.id===i);t.subs[ix].status=v; if(t.subs.length && t.subs.every(s=>s.status==='完成')) t.status='完成'; else if(t.subs.some(s=>s.status==='进行中'||s.status==='异常')) t.status='进行中'; else if(t.subs.every(s=>s.status==='取消')) t.status='取消'; save()}
+function updateTask(i){const t=tasks.find(x=>x.id===i);if(t.status!==es.value && !(flow[t.status]||[]).includes(es.value)) return alert('非法状态流转');if(es.value==='完成'&&t.subs.length&&t.subs.some(s=>s.status!=='完成')) return alert('仍有未完成子任务，不能标记完成');t.content=ec.value;t.q=+eq.value;t.status=es.value;t.due=ed.value?new Date(ed.value).toISOString():'';t.rem=erem.checked;t.notified=false;save();scheduleReminder(t);closeM()}
+function delTask(i){tasks=tasks.filter(x=>x.id!==i);save();closeM()}
+function startVoice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){openCreate('');return alert('当前浏览器不支持语音识别，已切换文字新建');}const r=new SR();r.lang='zh-CN';r.interimResults=false;r.onstart=()=>voice.textContent='录音中...';r.onresult=e=>{voice.textContent='';openCreate(e.results[0][0].transcript)};r.onerror=()=>{voice.textContent='';openCreate('');alert('转写失败，已切换文字输入')};r.start()}
+function exportData(){const blob=new Blob([JSON.stringify(tasks,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tasks.json';a.click();}
+function triggerImport(){importFile.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{tasks=normalizeTasks(JSON.parse(r.result));save();alert('导入成功');}catch{alert('导入失败：JSON 格式不正确')}};r.readAsText(f)}
+function clearData(){if(confirm('确认清空全部任务？')){tasks=[];save();}}
+async function requestNotify(){if(!('Notification' in window))return alert('当前浏览器不支持通知');const p=await Notification.requestPermission();alert('通知权限：'+p)}
+function scheduleReminder(t){if(!t.rem||!t.due||!('Notification' in window)||Notification.permission!=='granted')return;const ms=new Date(t.due).getTime()-Date.now()-3600000;if(ms>0)setTimeout(()=>{if(!t.notified){new Notification('任务提醒：'+t.title);t.notified=true;save();}},ms)}
+function bootReminders(){tasks.forEach(scheduleReminder)}
+m.onclick=e=>{if(e.target.id==='m')closeM()};save();bootReminders();
+</script></body></html>
